@@ -1,0 +1,68 @@
+{
+  "id": "castle-quest",
+  "title": "Castle Quest",
+  "description": "Turn a castle adventure into a sentence with one pull of the lever.",
+  "slots": [
+    {
+      "id": "subject",
+      "label": "Character",
+      "hint": "Who is in the castle?",
+      "color": "#ff7a59",
+      "words": [
+        "dragon",
+        "knight",
+        "wizard",
+        "princess",
+        "giant"
+      ]
+    },
+    {
+      "id": "verb",
+      "label": "Action",
+      "hint": "What are they doing?",
+      "color": "#14b8a6",
+      "words": [
+        "guards",
+        "tiptoes across",
+        "discovers",
+        "polishes",
+        "paints"
+      ]
+    },
+    {
+      "id": "place",
+      "label": "Place",
+      "hint": "Where in the castle?",
+      "color": "#4f46e5",
+      "words": [
+        "the moonlit tower",
+        "the secret hallway",
+        "the drawbridge",
+        "the royal garden",
+        "the treasure room"
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "id": "template-1",
+      "label": "Castle story",
+      "text": "The {subject} {verb} inside {place}."
+    },
+    {
+      "id": "template-2",
+      "label": "Question",
+      "text": "Will the {subject} {verb} near {place} tonight?"
+    },
+    {
+      "id": "template-3",
+      "label": "Royal report",
+      "text": "At sunrise, the {subject} {verb} around {place}."
+    },
+    {
+      "id": "template-4",
+      "label": "Big surprise",
+      "text": "Look out! The {subject} {verb} by {place}!"
+    }
+  ]
+}

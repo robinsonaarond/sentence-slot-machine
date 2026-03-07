@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sentence Slot Machine Teacher Studio</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script type="module" src="assets/teacher.js"></script>
+  </head>
+  <body class="theme-teacher">
+    <div class="page-shell">
+      <header class="hero-card teacher-hero">
+        <nav class="site-nav" aria-label="Primary">
+          <a class="brand-mark" href="index.html">Sentence Slot Machine</a>
+          <a class="pill-link" href="index.html">Student View</a>
+        </nav>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Teacher studio</p>
+            <h1 class="hero-title">Build a sentence set that kids can spin</h1>
+            <p class="hero-description">
+              Configure three slots, write sentence templates, preview the activity,
+              and export the dataset as static JSON.
+            </p>
+            <div class="badge-row">
+              <span class="info-badge" id="datasetIdBadge">Preview ID loading...</span>
+              <span class="info-badge" id="dirtyBadge">Unsaved preview</span>
+            </div>
+          </div>
+          <aside class="hero-note">
+            <p class="hero-note-title">Template tip</p>
+            <p>
+              Use slot tokens inside braces, such as <code>{subject}</code> or
+              <code>{verb}</code>, to drop your chosen words into a sentence.
+            </p>
+          </aside>
+        </div>
+      </header>
+
+      <main class="studio-layout">
+        <section class="panel-card studio-form">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Dataset details</p>
+              <h2>Author the activity</h2>
+            </div>
+            <p class="panel-copy">
+              Keep slot tokens short and lowercase so they are easy to reference in
+              templates.
+            </p>
+          </div>
+
+          <div class="field-grid field-grid-wide">
+            <label class="field">
+              <span class="field-label">Activity title</span>
+              <input class="text-input" id="titleInput" type="text" maxlength="80">
+            </label>
+
+            <label class="field field-span-full">
+              <span class="field-label">Student instructions</span>
+              <textarea
+                class="text-area"
+                id="descriptionInput"
+                rows="3"
+                maxlength="220"
+              ></textarea>
+            </label>
+          </div>
+
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Slots</p>
+              <h2>Three word reels</h2>
+            </div>
+          </div>
+
+          <div class="slot-editors">
+            <article class="slot-editor" data-slot-editor="0">
+              <div class="slot-editor-header">
+                <span class="slot-index">Slot 1</span>
+                <span class="slot-chip" data-slot-chip></span>
+              </div>
+              <div class="field-grid">
+                <label class="field">
+                  <span class="field-label">Label</span>
+                  <input
+                    class="text-input"
+                    data-role="slot-label"
+                    type="text"
+                    maxlength="30"
+                  >
+                </label>
+                <label class="field">
+                  <span class="field-label">Token</span>
+                  <input
+                    class="text-input"
+                    data-role="slot-token"
+                    type="text"
+                    maxlength="24"
+                    spellcheck="false"
+                  >
+                </label>
+                <label class="field">
+                  <span class="field-label">Hint</span>
+                  <input
+                    class="text-input"
+                    data-role="slot-hint"
+                    type="text"
+                    maxlength="40"
+                  >
+                </label>
+                <label class="field">
+                  <span class="field-label">Color</span>
+                  <input class="color-input" data-role="slot-color" type="color">
+                </label>
+                <label class="field field-span-full">
+                  <span class="field-label">Words (one per line)</span>
+                  <textarea class="text-area" data-role="slot-words" rows="7"></textarea>
+                </label>
+              </div>
+            </article>
+
+            <article class="slot-editor" data-slot-editor="1">
+              <div class="slot-editor-header">
+                <span class="slot-index">Slot 2</span>
+                <span class="slot-chip" data-slot-chip></span>
+              </div>
+              <div class="field-grid">
+                <label class="field">
+                  <span class="field-label">Label</span>
+                  <input
+                    class="text-input"
+                    data-role="slot-label"
+                    type="text"
+                    maxlength="30"
+                  >
+                </label>
+                <label class="field">
+                  <span class="field-label">Token</span>
+                  <input
+                    class="text-input"
+                    data-role="slot-token"
+                    type="text"
+                    maxlength="24"
+                    spellcheck="false"
+                  >
+                </label>
+                <label class="field">
+                  <span class="field-label">Hint</span>
+                  <input
+                    class="text-input"
+                    data-role="slot-hint"
+                    type="text"
+                    maxlength="40"
+                  >
+                </label>
+                <label class="field">
+                  <span class="field-label">Color</span>
+                  <input class="color-input" data-role="slot-color" type="color">
+                </label>
+                <label class="field field-span-full">
+                  <span class="field-label">Words (one per line)</span>
+                  <textarea class="text-area" data-role="slot-words" rows="7"></textarea>
+                </label>
+              </div>
+            </article>
+
+            <article class="slot-editor" data-slot-editor="2">
+              <div class="slot-editor-header">
+                <span class="slot-index">Slot 3</span>
+                <span class="slot-chip" data-slot-chip></span>
+              </div>
+              <div class="field-grid">
+                <label class="field">
+                  <span class="field-label">Label</span>
+                  <input
+                    class="text-input"
+                    data-role="slot-label"
+                    type="text"
+                    maxlength="30"
+                  >
+                </label>
+                <label class="field">
+                  <span class="field-label">Token</span>
+                  <input
+                    class="text-input"
+                    data-role="slot-token"
+                    type="text"
+                    maxlength="24"
+                    spellcheck="false"
+                  >
+                </label>
+                <label class="field">
+                  <span class="field-label">Hint</span>
+                  <input
+                    class="text-input"
+                    data-role="slot-hint"
+                    type="text"
+                    maxlength="40"
+                  >
+                </label>
+                <label class="field">
+                  <span class="field-label">Color</span>
+                  <input class="color-input" data-role="slot-color" type="color">
+                </label>
+                <label class="field field-span-full">
+                  <span class="field-label">Words (one per line)</span>
+                  <textarea class="text-area" data-role="slot-words" rows="7"></textarea>
+                </label>
+              </div>
+            </article>
+          </div>
+
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Sentence templates</p>
+              <h2>Write one sentence per line</h2>
+            </div>
+          </div>
+
+          <label class="field">
+            <span class="field-label">
+              Templates using slot tokens like <code>{subject}</code>
+            </span>
+            <textarea class="text-area template-area" id="templatesInput" rows="10"></textarea>
+          </label>
+
+          <div class="button-cluster action-row">
+            <button class="button button-secondary" id="loadDemoButton" type="button">
+              Load demo data
+            </button>
+            <button class="button button-primary" id="savePreviewButton" type="button">
+              Save preview
+            </button>
+            <button class="button button-secondary" id="exportButton" type="button">
+              Export JSON
+            </button>
+            <label class="button button-ghost file-button" for="importInput">
+              Import JSON
+            </label>
+            <input id="importInput" type="file" accept="application/json" hidden>
+          </div>
+
+          <p class="support-copy" id="actionStatus">
+            Load the demo, make changes, and save a preview to test it in the student
+            page.
+          </p>
+        </section>
+
+        <aside class="panel-card studio-summary">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Live summary</p>
+              <h2>Preview checks</h2>
+            </div>
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric-card">
+              <p class="metric-label">Sentence combinations</p>
+              <strong class="metric-value" id="comboMetric">0</strong>
+            </article>
+            <article class="metric-card">
+              <p class="metric-label">Templates</p>
+              <strong class="metric-value" id="templateMetric">0</strong>
+            </article>
+            <article class="metric-card">
+              <p class="metric-label">Words across slots</p>
+              <strong class="metric-value" id="wordMetric">0</strong>
+            </article>
+          </div>
+
+          <div class="summary-block">
+            <p class="summary-title">Available tokens</p>
+            <div class="token-list" id="tokenList"></div>
+          </div>
+
+          <div class="summary-block">
+            <p class="summary-title">Example sentence</p>
+            <p class="sample-sentence" id="sampleSentence">
+              Add some words and templates to preview a sentence here.
+            </p>
+          </div>
+
+          <div class="summary-block">
+            <p class="summary-title">Validation</p>
+            <div class="notice-stack" id="validationList"></div>
+          </div>
+
+          <div class="summary-block">
+            <p class="summary-title">Student preview</p>
+            <a
+              class="button button-primary button-block"
+              id="openPreviewLink"
+              href="index.html"
+              target="_blank"
+              rel="noreferrer"
+              aria-disabled="true"
+            >
+              Open student preview
+            </a>
+            <p class="support-copy" id="previewStatus">
+              Save a preview to create a live student link from this browser.
+            </p>
+          </div>
+        </aside>
+      </main>
+    </div>
+  </body>
+</html>

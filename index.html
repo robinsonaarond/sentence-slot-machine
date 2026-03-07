@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sentence Slot Machine</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script type="module" src="assets/app.js"></script>
+  </head>
+  <body class="theme-student">
+    <div class="page-shell">
+      <header class="hero-card">
+        <nav class="site-nav" aria-label="Primary">
+          <a class="brand-mark" href="index.html">Sentence Slot Machine</a>
+          <a class="pill-link" href="teacher.html">Teacher Studio</a>
+        </nav>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Read it. Spin it. Say it out loud.</p>
+            <h1 class="hero-title" id="heroTitle">Sentence Slot Machine</h1>
+            <p class="hero-description" id="heroDescription">
+              Pull the lever to build a brand-new sentence.
+            </p>
+            <div class="badge-row">
+              <span class="info-badge" id="sourceBadge">Loading activity...</span>
+              <span class="info-badge" id="combinationBadge">Counting combinations...</span>
+            </div>
+          </div>
+          <aside class="hero-note">
+            <p class="hero-note-title">How it works</p>
+            <p>
+              Each reel controls one kind of word. Match the slot color to the same
+              color in the sentence.
+            </p>
+            <div class="mini-instructions" aria-hidden="true">
+              <span>1. Pull the lever</span>
+              <span>2. Read the sentence</span>
+              <span>3. Switch the words</span>
+            </div>
+          </aside>
+        </div>
+      </header>
+
+      <main class="machine-layout">
+        <section class="panel-card">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Slot machine</p>
+              <h2>Choose your words</h2>
+            </div>
+            <p class="panel-copy">
+              Spin all three reels together or tap each word window to step it forward.
+            </p>
+          </div>
+
+          <div class="slot-machine">
+            <div class="machine-topper" aria-hidden="true">
+              <div class="machine-bulbs">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="machine-sign">
+                <p class="machine-sign-title">Sentence Spinner</p>
+                <p class="machine-sign-caption">
+                  Pull the lever or tap a reel word to switch it.
+                </p>
+              </div>
+            </div>
+
+            <div class="machine-cabinet">
+              <div class="machine-face">
+                <div class="machine-window-frame">
+                  <div class="reel-grid" id="reelGrid"></div>
+                </div>
+                <div class="machine-tray">
+                  <p class="machine-tray-text">
+                    Tap any word window to step to the next choice.
+                  </p>
+                </div>
+              </div>
+
+              <div class="lever-column">
+                <button class="machine-lever" id="spinButton" type="button">
+                  <span class="lever-mount" aria-hidden="true"></span>
+                  <span class="lever-arm" aria-hidden="true">
+                    <span class="lever-ball"></span>
+                  </span>
+                  <span class="sr-only">Pull the lever</span>
+                </button>
+                <p class="lever-caption">
+                  <strong>Pull</strong>
+                  <span>Spin all reels</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="machine-footer">
+              <div class="button-cluster">
+                <button
+                  class="button button-secondary"
+                  id="shuffleSentenceButton"
+                  type="button"
+                >
+                  New sentence frame
+                </button>
+                <button class="button button-ghost" id="resetWordsButton" type="button">
+                  Reset words
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="sentence-column">
+          <div class="panel-card sentence-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Sentence</p>
+                <h2 id="templateTitle">Loading...</h2>
+              </div>
+              <p class="template-counter" id="templateCounter">0 / 0</p>
+            </div>
+
+            <div class="sentence-stage" id="sentenceStage">
+              <p class="sentence-text" id="sentenceText" aria-live="polite"></p>
+            </div>
+
+            <div class="sentence-footer">
+              <div class="button-cluster">
+                <button
+                  class="button button-secondary"
+                  id="previousTemplateButton"
+                  type="button"
+                >
+                  Previous sentence
+                </button>
+                <button
+                  class="button button-secondary"
+                  id="nextTemplateButton"
+                  type="button"
+                >
+                  Next sentence
+                </button>
+              </div>
+              <p class="interaction-hint">
+                Swipe left or right on the sentence card to try another frame.
+              </p>
+            </div>
+          </div>
+
+          <div class="panel-card selection-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Current pick</p>
+                <h2>Word colors match the sentence</h2>
+              </div>
+            </div>
+            <div class="selection-summary" id="selectionSummary"></div>
+            <p class="support-copy" id="statusMessage">Loading your activity.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

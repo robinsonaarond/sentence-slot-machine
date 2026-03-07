@@ -1,0 +1,68 @@
+{
+  "id": "ocean-parade",
+  "title": "Ocean Parade",
+  "description": "Spin sea creatures into a sentence and read the underwater adventure.",
+  "slots": [
+    {
+      "id": "subject",
+      "label": "Sea creature",
+      "hint": "Who is swimming?",
+      "color": "#ff7a59",
+      "words": [
+        "dolphin",
+        "octopus",
+        "sea turtle",
+        "jellyfish",
+        "crab"
+      ]
+    },
+    {
+      "id": "verb",
+      "label": "Action",
+      "hint": "What happens underwater?",
+      "color": "#14b8a6",
+      "words": [
+        "glides past",
+        "twirls around",
+        "sings to",
+        "hides near",
+        "races toward"
+      ]
+    },
+    {
+      "id": "place",
+      "label": "Place",
+      "hint": "Where is the action?",
+      "color": "#4f46e5",
+      "words": [
+        "the coral reef",
+        "the tide pool",
+        "the sea cave",
+        "the pirate ship",
+        "the sandy shore"
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "id": "template-1",
+      "label": "Underwater story",
+      "text": "The {subject} {verb} near {place}."
+    },
+    {
+      "id": "template-2",
+      "label": "Question",
+      "text": "Can the {subject} {verb} around {place}?"
+    },
+    {
+      "id": "template-3",
+      "label": "Discovery",
+      "text": "Today, the {subject} {verb} by {place}."
+    },
+    {
+      "id": "template-4",
+      "label": "Surprise splash",
+      "text": "Splash! The {subject} {verb} beside {place}!"
+    }
+  ]
+}

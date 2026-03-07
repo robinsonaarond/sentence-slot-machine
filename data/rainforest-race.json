@@ -1,0 +1,68 @@
+{
+  "id": "rainforest-race",
+  "title": "Rainforest Race",
+  "description": "Build a wild rainforest sentence with creatures, actions, and places.",
+  "slots": [
+    {
+      "id": "subject",
+      "label": "Creature",
+      "hint": "Who is moving?",
+      "color": "#ff7a59",
+      "words": [
+        "toucan",
+        "jaguar",
+        "monkey",
+        "frog",
+        "sloth"
+      ]
+    },
+    {
+      "id": "verb",
+      "label": "Action",
+      "hint": "What are they doing?",
+      "color": "#14b8a6",
+      "words": [
+        "swings beside",
+        "splashes through",
+        "drums on",
+        "peeks from",
+        "naps near"
+      ]
+    },
+    {
+      "id": "place",
+      "label": "Place",
+      "hint": "Where in the rainforest?",
+      "color": "#4f46e5",
+      "words": [
+        "the tall vines",
+        "the bright waterfall",
+        "the banana grove",
+        "the mossy cave",
+        "the treehouse path"
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "id": "template-1",
+      "label": "Forest story",
+      "text": "The {subject} {verb} {place}."
+    },
+    {
+      "id": "template-2",
+      "label": "Morning scene",
+      "text": "Early this morning, the {subject} {verb} near {place}."
+    },
+    {
+      "id": "template-3",
+      "label": "Question",
+      "text": "Why did the {subject} {verb} around {place}?"
+    },
+    {
+      "id": "template-4",
+      "label": "Adventure call",
+      "text": "Watch the {subject} {verb} beside {place}!"
+    }
+  ]
+}

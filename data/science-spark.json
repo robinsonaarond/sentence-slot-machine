@@ -1,0 +1,68 @@
+{
+  "id": "science-spark",
+  "title": "Science Spark",
+  "description": "Spin a science sentence with lab tools, experiments, and places.",
+  "slots": [
+    {
+      "id": "subject",
+      "label": "Science star",
+      "hint": "Who or what is in the lab?",
+      "color": "#ff7a59",
+      "words": [
+        "robot",
+        "magnet",
+        "student",
+        "volcano",
+        "rocket"
+      ]
+    },
+    {
+      "id": "verb",
+      "label": "Action",
+      "hint": "What happens in the experiment?",
+      "color": "#14b8a6",
+      "words": [
+        "mixes",
+        "measures",
+        "studies",
+        "lights up",
+        "launches past"
+      ]
+    },
+    {
+      "id": "place",
+      "label": "Place",
+      "hint": "Where does it happen?",
+      "color": "#4f46e5",
+      "words": [
+        "the beaker station",
+        "the test table",
+        "the planet poster",
+        "the bubbling lab",
+        "the invention corner"
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "id": "template-1",
+      "label": "Lab report",
+      "text": "The {subject} {verb} near {place}."
+    },
+    {
+      "id": "template-2",
+      "label": "Observation",
+      "text": "In science class, the {subject} {verb} by {place}."
+    },
+    {
+      "id": "template-3",
+      "label": "Question",
+      "text": "How can the {subject} {verb} around {place}?"
+    },
+    {
+      "id": "template-4",
+      "label": "Experiment surprise",
+      "text": "Wow! The {subject} {verb} beside {place}!"
+    }
+  ]
+}

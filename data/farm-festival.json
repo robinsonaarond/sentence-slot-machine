@@ -1,0 +1,68 @@
+{
+  "id": "farm-festival",
+  "title": "Farm Festival",
+  "description": "Spin a farmyard sentence with animals, actions, and busy places.",
+  "slots": [
+    {
+      "id": "subject",
+      "label": "Farm friend",
+      "hint": "Who is on the farm?",
+      "color": "#ff7a59",
+      "words": [
+        "rooster",
+        "tractor",
+        "scarecrow",
+        "puppy",
+        "farmer"
+      ]
+    },
+    {
+      "id": "verb",
+      "label": "Action",
+      "hint": "What are they doing?",
+      "color": "#14b8a6",
+      "words": [
+        "chases",
+        "rolls past",
+        "balances on",
+        "sings to",
+        "waters"
+      ]
+    },
+    {
+      "id": "place",
+      "label": "Place",
+      "hint": "Where on the farm?",
+      "color": "#4f46e5",
+      "words": [
+        "the haystack",
+        "the red barn",
+        "the pumpkin patch",
+        "the fence gate",
+        "the apple cart"
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "id": "template-1",
+      "label": "Farm story",
+      "text": "The {subject} {verb} near {place}."
+    },
+    {
+      "id": "template-2",
+      "label": "Morning scene",
+      "text": "This morning, the {subject} {verb} by {place}."
+    },
+    {
+      "id": "template-3",
+      "label": "Question",
+      "text": "Did the {subject} {verb} around {place}?"
+    },
+    {
+      "id": "template-4",
+      "label": "Festival surprise",
+      "text": "Hooray! The {subject} {verb} beside {place}!"
+    }
+  ]
+}

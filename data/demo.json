@@ -1,0 +1,68 @@
+{
+  "id": "demo",
+  "title": "Playground Parade",
+  "description": "Pull the lever, read the sentence, and see how each word fits into the story.",
+  "slots": [
+    {
+      "id": "subject",
+      "label": "Noun",
+      "hint": "Who or what?",
+      "color": "#ff7a59",
+      "words": [
+        "panda",
+        "robot",
+        "pirate",
+        "unicorn",
+        "dinosaur"
+      ]
+    },
+    {
+      "id": "verb",
+      "label": "Verb",
+      "hint": "What are they doing?",
+      "color": "#14b8a6",
+      "words": [
+        "juggles",
+        "paints",
+        "whispers to",
+        "balances",
+        "tickles"
+      ]
+    },
+    {
+      "id": "place",
+      "label": "Place",
+      "hint": "Where does it happen?",
+      "color": "#4f46e5",
+      "words": [
+        "at recess",
+        "on the moon",
+        "in the library",
+        "under the slide",
+        "by the snack table"
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "id": "template-1",
+      "label": "Story line",
+      "text": "The {subject} {verb} {place}."
+    },
+    {
+      "id": "template-2",
+      "label": "Question",
+      "text": "Can the {subject} {verb} {place} today?"
+    },
+    {
+      "id": "template-3",
+      "label": "Daily routine",
+      "text": "Every afternoon, the {subject} {verb} {place}."
+    },
+    {
+      "id": "template-4",
+      "label": "Surprise moment",
+      "text": "Look out: the {subject} suddenly {verb} {place}!"
+    }
+  ]
+}

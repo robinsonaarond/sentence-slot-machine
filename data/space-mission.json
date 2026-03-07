@@ -1,0 +1,68 @@
+{
+  "id": "space-mission",
+  "title": "Space Mission",
+  "description": "Spin a space story and read it like mission control.",
+  "slots": [
+    {
+      "id": "subject",
+      "label": "Space friend",
+      "hint": "Who is in the story?",
+      "color": "#ff7a59",
+      "words": [
+        "astronaut",
+        "rover",
+        "alien",
+        "comet",
+        "satellite"
+      ]
+    },
+    {
+      "id": "verb",
+      "label": "Action",
+      "hint": "What happens?",
+      "color": "#14b8a6",
+      "words": [
+        "zooms past",
+        "maps",
+        "waves to",
+        "circles",
+        "bounces near"
+      ]
+    },
+    {
+      "id": "place",
+      "label": "Place",
+      "hint": "Where is it happening?",
+      "color": "#4f46e5",
+      "words": [
+        "the moon base",
+        "the launch pad",
+        "Saturn's rings",
+        "the star tunnel",
+        "the glowing nebula"
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "id": "template-1",
+      "label": "Mission report",
+      "text": "The {subject} {verb} near {place}."
+    },
+    {
+      "id": "template-2",
+      "label": "Countdown",
+      "text": "During the countdown, the {subject} {verb} by {place}."
+    },
+    {
+      "id": "template-3",
+      "label": "Question",
+      "text": "Can the {subject} {verb} around {place} today?"
+    },
+    {
+      "id": "template-4",
+      "label": "Surprise",
+      "text": "Suddenly, the {subject} {verb} above {place}!"
+    }
+  ]
+}
