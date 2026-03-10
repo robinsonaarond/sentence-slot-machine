@@ -2,6 +2,7 @@ import {
   countSentenceCombinations,
   fillTemplateText,
   hexToRgba,
+  isDebugMode,
   loadDatasetFromLocation,
   splitTemplateText
 } from "./shared.js";
@@ -13,8 +14,11 @@ const state = {
   templateIndex: 0,
   spinning: false,
   reelElements: new Map(),
-  pointerStart: null
+  pointerStart: null,
+  debug: isDebugMode()
 };
+
+document.body.classList.toggle("debug-mode", state.debug);
 
 const elements = {
   heroTitle: document.querySelector("#heroTitle"),
@@ -109,6 +113,7 @@ function renderReels() {
 
     const countElement = document.createElement("p");
     countElement.className = "reel-count";
+    countElement.dataset.debugOnly = "";
     countElement.textContent = `1 / ${slot.words.length}`;
     reelHeader.append(labelGroup, countElement);
 

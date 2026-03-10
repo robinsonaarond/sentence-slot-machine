@@ -21,12 +21,12 @@
             <p class="hero-description" id="heroDescription">
               Pull the lever to build a brand-new sentence.
             </p>
-            <div class="badge-row">
+            <div class="badge-row" data-debug-only>
               <span class="info-badge" id="sourceBadge">Loading activity...</span>
               <span class="info-badge" id="combinationBadge">Counting combinations...</span>
             </div>
           </div>
-          <aside class="hero-note">
+          <aside class="hero-note" data-debug-only>
             <p class="hero-note-title">How it works</p>
             <p>
               Each reel controls one kind of word. Match the slot color to the same
@@ -57,7 +57,7 @@
             </div>
             <div class="machine-sign">
               <p class="machine-sign-title">Sentence Spinner</p>
-              <p class="machine-sign-caption">
+              <p class="machine-sign-caption" data-debug-only>
                 Pull the lever or tap a reel word to switch it.
               </p>
             </div>
@@ -70,7 +70,7 @@
               <p class="eyebrow">Slot machine</p>
                 <h2>Choose your words</h2>
             </div>
-            <p class="panel-copy">
+            <p class="panel-copy" data-debug-only>
               Spin all reels together or tap each word window to step it forward.
             </p>
           </div>
@@ -90,7 +90,7 @@
               </div>
               <div class="machine-sign">
                 <p class="machine-sign-title">Sentence Spinner</p>
-                <p class="machine-sign-caption">
+                <p class="machine-sign-caption" data-debug-only>
                   Pull the lever or tap a reel word to switch it.
                 </p>
               </div>
@@ -101,7 +101,7 @@
                 <div class="machine-window-frame">
                   <div class="reel-grid" id="reelGrid"></div>
                 </div>
-                <div class="machine-tray">
+                <div class="machine-tray" data-debug-only>
                   <p class="machine-tray-text">
                     Tap any word window to step to the next choice.
                   </p>
@@ -116,7 +116,7 @@
                   </span>
                   <span class="sr-only">Pull the lever</span>
                 </button>
-                <p class="lever-caption">
+                <p class="lever-caption" data-debug-only>
                   <strong>Pull</strong>
                   <span>Spin all reels</span>
                 </p>
@@ -132,7 +132,12 @@
                 >
                   New sentence frame
                 </button>
-                <button class="button button-ghost" id="resetWordsButton" type="button">
+                <button
+                  class="button button-ghost"
+                  id="resetWordsButton"
+                  type="button"
+                  data-debug-only
+                >
                   Reset words
                 </button>
               </div>
@@ -147,7 +152,7 @@
                 <p class="eyebrow">Sentence</p>
                 <h2 id="templateTitle">Loading...</h2>
               </div>
-              <p class="template-counter" id="templateCounter">0 / 0</p>
+              <p class="template-counter" id="templateCounter" data-debug-only>0 / 0</p>
             </div>
 
             <div class="sentence-stage" id="sentenceStage">
@@ -185,7 +190,9 @@
               </div>
             </div>
             <div class="selection-summary" id="selectionSummary"></div>
-            <p class="support-copy" id="statusMessage">Loading your activity.</p>
+            <p class="support-copy" id="statusMessage" data-debug-only>
+              Loading your activity.
+            </p>
           </div>
         </section>
       </main>

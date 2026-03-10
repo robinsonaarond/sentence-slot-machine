@@ -105,6 +105,16 @@ function asString(value) {
   return typeof value === "string" ? value : String(value ?? "");
 }
 
+function isTruthyQueryValue(value) {
+  const normalized = asString(value).trim().toLowerCase();
+
+  if (!normalized) {
+    return true;
+  }
+
+  return !["0", "false", "no", "off"].includes(normalized);
+}
+
 function normalizeColor(value, fallback) {
   const text = asString(value).trim();
   if (/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(text)) {
@@ -442,6 +452,18 @@ export function buildStoredDatasetKey(datasetId) {
   return `${STORAGE_PREFIX}${datasetId}`;
 }
 
+export function isDebugMode(search = window.location.search) {
+  const params = new URLSearchParams(search);
+
+  for (const [key, value] of params.entries()) {
+    if (key.toLowerCase() === "debug") {
+      return isTruthyQueryValue(value);
+    }
+  }
+
+  return false;
+}
+
 export function saveDatasetToStorage(dataset) {
   window.localStorage.setItem(buildStoredDatasetKey(dataset.id), JSON.stringify(dataset));
 }
@@ -458,6 +480,11 @@ export function loadStoredDataset(datasetId) {
 export function buildPreviewUrl(datasetId) {
   const url = new URL("index.html", window.location.href);
   url.searchParams.set("set", datasetId);
+
+  if (isDebugMode()) {
+    url.searchParams.set("DEBUG", "true");
+  }
+
   return url.toString();
 }
 
