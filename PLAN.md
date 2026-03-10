@@ -45,7 +45,7 @@ Future work:
 
 ### Student Page
 
-- Show a bright, playful slot machine with three reels
+- Show a bright, playful slot machine with 2 to 10 reels
 - Assign each reel to a grammar role
 - Spin all reels with a lever-like control
 - Randomly select words from the active dataset
@@ -57,7 +57,7 @@ Future work:
 ### Teacher Page
 
 - Edit the activity title and supporting description
-- Configure three slots with labels, tokens, colors, and word lists
+- Configure 2 to 10 slots with labels, tokens, colors, and word lists
 - Author sentence templates using placeholder tokens
 - Validate templates against the available slots
 - Estimate how many sentence combinations are possible
@@ -93,7 +93,7 @@ Each activity is represented as JSON with:
 - `id`: unique dataset identifier
 - `title`: student-facing activity title
 - `description`: short supporting text
-- `slots`: three slot definitions
+- `slots`: 2 to 10 slot definitions
 - `templates`: sentence templates containing placeholder tokens
 
 Example structure:

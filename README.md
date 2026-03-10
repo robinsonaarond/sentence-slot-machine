@@ -12,7 +12,7 @@ It currently includes:
 
 ### Student Page
 
-`index.html` loads a dataset, spins three word reels, and renders a sentence using the selected words.
+`index.html` loads a dataset, spins 2 to 10 word reels, and renders a sentence using the selected words.
 
 Current student features:
 
@@ -29,7 +29,7 @@ Current student features:
 Current teacher features:
 
 - edit title and description
-- configure three slots with tokens, labels, colors, and words
+- configure 2 to 10 slots with tokens, labels, colors, and words
 - write sentence templates with placeholders such as `{subject}`
 - validate templates and count possible combinations
 - save datasets to browser storage
@@ -116,7 +116,7 @@ Datasets are plain JSON files with this shape:
 
 Rules:
 
-- `slots` should contain three entries for the current UI
+- `slots` should contain between 2 and 10 entries
 - slot `id` values must be unique and are used inside template placeholders
 - each slot should have at least one word
 - templates should reference slot ids inside braces

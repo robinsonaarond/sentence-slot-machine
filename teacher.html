@@ -19,8 +19,8 @@
             <p class="eyebrow">Teacher studio</p>
             <h1 class="hero-title">Build a sentence set that kids can spin</h1>
             <p class="hero-description">
-              Configure three slots, write sentence templates, preview the activity,
-              and export the dataset as static JSON.
+              Configure 2 to 10 slots, write sentence templates, preview the
+              activity, and export the dataset as static JSON.
             </p>
             <div class="badge-row">
               <span class="info-badge" id="datasetIdBadge">Preview ID loading...</span>
@@ -30,8 +30,9 @@
           <aside class="hero-note">
             <p class="hero-note-title">Template tip</p>
             <p>
-              Use slot tokens inside braces, such as <code>{subject}</code> or
-              <code>{verb}</code>, to drop your chosen words into a sentence.
+              Use slot tokens inside braces, such as <code>{subject}</code>,
+              <code>{verb}</code>, or <code>{slot-4}</code>, to drop your chosen
+              words into a sentence.
             </p>
           </aside>
         </div>
@@ -70,105 +71,37 @@
           <div class="section-heading">
             <div>
               <p class="eyebrow">Slots</p>
-              <h2>Three word reels</h2>
+              <h2>Word reels from 2 to 10</h2>
+            </div>
+            <div class="button-cluster section-actions">
+              <span class="info-badge" id="slotCountBadge">3 slots</span>
+              <button class="button button-secondary" id="addSlotButton" type="button">
+                Add slot
+              </button>
             </div>
           </div>
 
-          <div class="slot-editors">
-            <article class="slot-editor" data-slot-editor="0">
-              <div class="slot-editor-header">
-                <span class="slot-index">Slot 1</span>
-                <span class="slot-chip" data-slot-chip></span>
-              </div>
-              <div class="field-grid">
-                <label class="field">
-                  <span class="field-label">Label</span>
-                  <input
-                    class="text-input"
-                    data-role="slot-label"
-                    type="text"
-                    maxlength="30"
-                  >
-                </label>
-                <label class="field">
-                  <span class="field-label">Token</span>
-                  <input
-                    class="text-input"
-                    data-role="slot-token"
-                    type="text"
-                    maxlength="24"
-                    spellcheck="false"
-                  >
-                </label>
-                <label class="field">
-                  <span class="field-label">Hint</span>
-                  <input
-                    class="text-input"
-                    data-role="slot-hint"
-                    type="text"
-                    maxlength="40"
-                  >
-                </label>
-                <label class="field">
-                  <span class="field-label">Color</span>
-                  <input class="color-input" data-role="slot-color" type="color">
-                </label>
-                <label class="field field-span-full">
-                  <span class="field-label">Words (one per line)</span>
-                  <textarea class="text-area" data-role="slot-words" rows="7"></textarea>
-                </label>
-              </div>
-            </article>
+          <p class="support-copy slot-support">
+            Add or remove slots here. Keep your sentence templates aligned with the
+            tokens shown in each reel.
+          </p>
 
-            <article class="slot-editor" data-slot-editor="1">
-              <div class="slot-editor-header">
-                <span class="slot-index">Slot 2</span>
-                <span class="slot-chip" data-slot-chip></span>
-              </div>
-              <div class="field-grid">
-                <label class="field">
-                  <span class="field-label">Label</span>
-                  <input
-                    class="text-input"
-                    data-role="slot-label"
-                    type="text"
-                    maxlength="30"
-                  >
-                </label>
-                <label class="field">
-                  <span class="field-label">Token</span>
-                  <input
-                    class="text-input"
-                    data-role="slot-token"
-                    type="text"
-                    maxlength="24"
-                    spellcheck="false"
-                  >
-                </label>
-                <label class="field">
-                  <span class="field-label">Hint</span>
-                  <input
-                    class="text-input"
-                    data-role="slot-hint"
-                    type="text"
-                    maxlength="40"
-                  >
-                </label>
-                <label class="field">
-                  <span class="field-label">Color</span>
-                  <input class="color-input" data-role="slot-color" type="color">
-                </label>
-                <label class="field field-span-full">
-                  <span class="field-label">Words (one per line)</span>
-                  <textarea class="text-area" data-role="slot-words" rows="7"></textarea>
-                </label>
-              </div>
-            </article>
+          <div class="slot-editors" id="slotEditors"></div>
 
-            <article class="slot-editor" data-slot-editor="2">
+          <template id="slotEditorTemplate">
+            <article class="slot-editor" data-slot-editor="">
               <div class="slot-editor-header">
-                <span class="slot-index">Slot 3</span>
-                <span class="slot-chip" data-slot-chip></span>
+                <div class="slot-editor-meta">
+                  <span class="slot-index" data-slot-index>Slot 1</span>
+                  <span class="slot-chip" data-slot-chip></span>
+                </div>
+                <button
+                  class="button button-ghost slot-remove-button"
+                  data-action="remove-slot"
+                  type="button"
+                >
+                  Remove
+                </button>
               </div>
               <div class="field-grid">
                 <label class="field">
@@ -209,7 +142,7 @@
                 </label>
               </div>
             </article>
-          </div>
+          </template>
 
           <div class="section-heading">
             <div>

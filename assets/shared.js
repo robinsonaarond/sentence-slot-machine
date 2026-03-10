@@ -1,4 +1,6 @@
 export const STORAGE_PREFIX = "sentence-slot-machine:dataset:";
+export const MIN_SLOT_COUNT = 2;
+export const MAX_SLOT_COUNT = 10;
 
 const DEFAULT_SLOT_BLUEPRINTS = [
   {
@@ -22,6 +24,19 @@ const DEFAULT_SLOT_BLUEPRINTS = [
     color: "#4f46e5",
     words: ["at recess", "on the moon", "in the library"]
   }
+];
+
+const DEFAULT_SLOT_COLORS = [
+  "#ff7a59",
+  "#14b8a6",
+  "#4f46e5",
+  "#f59e0b",
+  "#ef4444",
+  "#10b981",
+  "#0ea5e9",
+  "#8b5cf6",
+  "#ec4899",
+  "#84cc16"
 ];
 
 export const DEMO_FALLBACK_DATASET = {
@@ -112,9 +127,36 @@ function uniquePreserveOrder(values) {
   });
 }
 
+function createFallbackBlueprint(index) {
+  const number = index + 1;
+
+  return {
+    id: `slot-${number}`,
+    label: `Slot ${number}`,
+    hint: "Which word fits here?",
+    color: DEFAULT_SLOT_COLORS[index % DEFAULT_SLOT_COLORS.length],
+    words: [`word ${number}a`, `word ${number}b`, `word ${number}c`]
+  };
+}
+
+function defaultSlotBlueprint(index) {
+  return DEFAULT_SLOT_BLUEPRINTS[index] || createFallbackBlueprint(index);
+}
+
 function defaultTemplateFromSlots(slots) {
-  const [first, second, third] = slots.map((slot) => slot.id);
-  return `The {${first}} likes to {${second}} {${third}}.`;
+  const tokenText = slots.map((slot) => `{${slot.id}}`);
+
+  if (tokenText.length <= 1) {
+    return `${tokenText[0] || "{slot-1}"}.`;
+  }
+
+  if (tokenText.length === 2) {
+    return `The ${tokenText[0]} ${tokenText[1]}.`;
+  }
+
+  const [first, second, third, ...rest] = tokenText;
+  const suffix = rest.length ? ` ${rest.join(" ")}` : "";
+  return `The ${first} likes to ${second} ${third}${suffix}.`;
 }
 
 function normalizeTemplate(template, index) {
@@ -136,9 +178,7 @@ function normalizeTemplate(template, index) {
 }
 
 function normalizeSlot(slot, index, usedIds) {
-  const blueprint =
-    DEFAULT_SLOT_BLUEPRINTS[index] ||
-    DEFAULT_SLOT_BLUEPRINTS[DEFAULT_SLOT_BLUEPRINTS.length - 1];
+  const blueprint = defaultSlotBlueprint(index);
   const rawSlot = slot && typeof slot === "object" ? slot : {};
 
   let id = slugify(rawSlot.id || rawSlot.token || rawSlot.label || blueprint.id) || `slot-${index + 1}`;
@@ -160,6 +200,10 @@ function normalizeSlot(slot, index, usedIds) {
     color: normalizeColor(rawSlot.color, blueprint.color),
     words: words.length ? words : [...blueprint.words]
   };
+}
+
+export function createDefaultSlot(index, usedIds = new Set()) {
+  return normalizeSlot({}, index, usedIds);
 }
 
 export function slugify(value) {
@@ -273,10 +317,10 @@ export function normalizeDataset(raw = DEMO_FALLBACK_DATASET, options = {}) {
   const source = raw && typeof raw === "object" ? raw : DEMO_FALLBACK_DATASET;
   const usedIds = new Set();
   const slots = asArray(source.slots)
-    .slice(0, 3)
+    .slice(0, MAX_SLOT_COUNT)
     .map((slot, index) => normalizeSlot(slot, index, usedIds));
 
-  while (slots.length < 3) {
+  while (slots.length < MIN_SLOT_COUNT) {
     slots.push(normalizeSlot({}, slots.length, usedIds));
   }
 
@@ -315,15 +359,15 @@ export function validateDataset(raw) {
     warnings.push("Add a title so students know what activity they are playing.");
   }
 
-  if (slots.length !== 3) {
-    issues.push("The current student page expects exactly three slots.");
+  if (slots.length < MIN_SLOT_COUNT || slots.length > MAX_SLOT_COUNT) {
+    issues.push(`Use between ${MIN_SLOT_COUNT} and ${MAX_SLOT_COUNT} slots.`);
   }
 
   const slotWordsById = new Map();
   const seenIds = new Set();
   const orderedIds = [];
 
-  slots.slice(0, 3).forEach((slot, index) => {
+  slots.forEach((slot, index) => {
     const slotObject = slot && typeof slot === "object" ? slot : {};
     const id = slugify(slotObject.id || slotObject.token || slotObject.label || "");
     const label = asString(slotObject.label).trim() || `Slot ${index + 1}`;

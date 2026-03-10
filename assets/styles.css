@@ -481,7 +481,7 @@ code {
 
 .reel-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 18px;
   padding: 22px;
   border-radius: 22px;
@@ -533,7 +533,7 @@ code {
 .reel-window {
   appearance: none;
   width: 100%;
-  min-height: 230px;
+  min-height: clamp(140px, 18vw, 230px);
   padding: 24px 18px;
   border: 0;
   border-radius: 20px;
@@ -844,6 +844,7 @@ code {
 
 .selection-summary {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px;
 }
 
@@ -933,12 +934,25 @@ code {
 }
 
 .section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
   margin: 8px 0 16px;
+}
+
+.section-actions {
+  align-items: center;
+}
+
+.slot-support {
+  margin-bottom: 16px;
 }
 
 .slot-editors {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
   gap: 16px;
 }
 
@@ -957,6 +971,17 @@ code {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 14px;
+}
+
+.slot-editor-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.slot-remove-button {
+  min-height: 40px;
+  padding: 0 14px;
 }
 
 .slot-chip {
@@ -987,7 +1012,12 @@ code {
   font-size: clamp(1.3rem, 2vw, 1.85rem);
 }
 
-.token-list,
+.token-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
 .notice-stack {
   display: grid;
   gap: 10px;

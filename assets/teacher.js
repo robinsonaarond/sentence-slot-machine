@@ -1,7 +1,10 @@
 import {
   DEMO_FALLBACK_DATASET,
+  MAX_SLOT_COUNT,
+  MIN_SLOT_COUNT,
   buildPreviewUrl,
   createDatasetId,
+  createDefaultSlot,
   downloadJson,
   fillTemplateText,
   hexToRgba,
@@ -16,12 +19,17 @@ import {
 const state = {
   currentPreviewId: "",
   lastSavedId: null,
-  isDirty: true
+  isDirty: true,
+  slots: []
 };
 
 const elements = {
   titleInput: document.querySelector("#titleInput"),
   descriptionInput: document.querySelector("#descriptionInput"),
+  slotEditors: document.querySelector("#slotEditors"),
+  slotEditorTemplate: document.querySelector("#slotEditorTemplate"),
+  slotCountBadge: document.querySelector("#slotCountBadge"),
+  addSlotButton: document.querySelector("#addSlotButton"),
   templatesInput: document.querySelector("#templatesInput"),
   loadDemoButton: document.querySelector("#loadDemoButton"),
   savePreviewButton: document.querySelector("#savePreviewButton"),
@@ -40,16 +48,6 @@ const elements = {
   previewStatus: document.querySelector("#previewStatus")
 };
 
-const slotEditors = Array.from(document.querySelectorAll("[data-slot-editor]")).map((editor) => ({
-  editor,
-  chip: editor.querySelector("[data-slot-chip]"),
-  labelInput: editor.querySelector('[data-role="slot-label"]'),
-  tokenInput: editor.querySelector('[data-role="slot-token"]'),
-  hintInput: editor.querySelector('[data-role="slot-hint"]'),
-  colorInput: editor.querySelector('[data-role="slot-color"]'),
-  wordsInput: editor.querySelector('[data-role="slot-words"]')
-}));
-
 document.addEventListener("DOMContentLoaded", init);
 
 function init() {
@@ -61,22 +59,13 @@ function init() {
 }
 
 function bindEvents() {
-  const watchedFields = [
-    elements.titleInput,
-    elements.descriptionInput,
-    elements.templatesInput,
-    ...slotEditors.flatMap((editor) => [
-      editor.labelInput,
-      editor.tokenInput,
-      editor.hintInput,
-      editor.colorInput,
-      editor.wordsInput
-    ])
-  ];
-
-  watchedFields.forEach((field) => {
+  [elements.titleInput, elements.descriptionInput, elements.templatesInput].forEach((field) => {
     field.addEventListener("input", handleFormInput);
   });
+
+  elements.slotEditors.addEventListener("input", handleFormInput);
+  elements.slotEditors.addEventListener("click", handleSlotEditorClick);
+  elements.addSlotButton.addEventListener("click", addSlot);
 
   elements.loadDemoButton.addEventListener("click", () => {
     loadDatasetIntoForm(DEMO_FALLBACK_DATASET, {
@@ -99,8 +88,28 @@ function handleFormInput(event) {
     event.target.value = slugify(event.target.value);
   }
 
+  const editor = event.target.closest("[data-slot-editor]");
+  if (editor) {
+    syncSlotFromEditor(editor);
+  }
+
   state.isDirty = true;
   refreshSummary();
+}
+
+function handleSlotEditorClick(event) {
+  const removeButton = event.target.closest('[data-action="remove-slot"]');
+  if (!removeButton || removeButton.disabled) {
+    return;
+  }
+
+  const editor = removeButton.closest("[data-slot-editor]");
+  const index = Number(editor?.dataset.slotEditor);
+  if (!Number.isInteger(index)) {
+    return;
+  }
+
+  removeSlot(index);
 }
 
 function buildFormDataset() {
@@ -108,12 +117,12 @@ function buildFormDataset() {
     id: state.currentPreviewId,
     title: elements.titleInput.value.trim(),
     description: elements.descriptionInput.value.trim(),
-    slots: slotEditors.map((editor) => ({
-      id: editor.tokenInput.value.trim(),
-      label: editor.labelInput.value.trim(),
-      hint: editor.hintInput.value.trim(),
-      color: editor.colorInput.value,
-      words: parseWordLines(editor.wordsInput.value)
+    slots: state.slots.map((slot) => ({
+      id: slot.id.trim(),
+      label: slot.label.trim(),
+      hint: slot.hint.trim(),
+      color: slot.color,
+      words: [...slot.words]
     })),
     templates: parseTemplateLines(elements.templatesInput.value).map((text, index) => ({
       id: `template-${index + 1}`,
@@ -141,20 +150,13 @@ function loadDatasetIntoForm(dataset, options = {}) {
   state.currentPreviewId = normalized.id;
   state.lastSavedId = null;
   state.isDirty = true;
+  state.slots = normalized.slots.map(cloneSlot);
 
   elements.titleInput.value = normalized.title;
   elements.descriptionInput.value = normalized.description;
   elements.templatesInput.value = normalized.templates.map((template) => template.text).join("\n");
 
-  slotEditors.forEach((editor, index) => {
-    const slot = normalized.slots[index];
-    editor.labelInput.value = slot.label;
-    editor.tokenInput.value = slot.id;
-    editor.hintInput.value = slot.hint;
-    editor.colorInput.value = slot.color;
-    editor.wordsInput.value = slot.words.join("\n");
-  });
-
+  renderSlotEditors();
   refreshSummary();
   setActionStatus(options.message || "Loaded a dataset into the editor.", "info");
 }
@@ -165,10 +167,7 @@ function refreshSummary() {
   const safePreviewDataset = normalizeDataset(formDataset, {
     datasetId: state.currentPreviewId
   });
-  const totalWords = formDataset.slots.reduce(
-    (sum, slot) => sum + parseWordLines(slot.words).length,
-    0
-  );
+  const totalWords = formDataset.slots.reduce((sum, slot) => sum + slot.words.length, 0);
 
   elements.datasetIdBadge.textContent = `Preview ID: ${state.currentPreviewId}`;
   elements.comboMetric.textContent = validation.combinationCount.toLocaleString();
@@ -180,7 +179,84 @@ function refreshSummary() {
   renderSampleSentence(validation, safePreviewDataset);
   updateDirtyBadge();
   updatePreviewLink();
-  syncSlotChips();
+  updateSlotControls();
+}
+
+function renderSlotEditors() {
+  elements.slotEditors.innerHTML = "";
+
+  state.slots.forEach((slot, index) => {
+    const editor = elements.slotEditorTemplate.content.firstElementChild.cloneNode(true);
+    editor.dataset.slotEditor = String(index);
+
+    editor.querySelector("[data-slot-index]").textContent = `Slot ${index + 1}`;
+    editor.querySelector("[data-slot-chip]").style.backgroundColor = slot.color;
+    editor.querySelector('[data-role="slot-label"]').value = slot.label;
+    editor.querySelector('[data-role="slot-token"]').value = slot.id;
+    editor.querySelector('[data-role="slot-hint"]').value = slot.hint;
+    editor.querySelector('[data-role="slot-color"]').value = slot.color;
+    editor.querySelector('[data-role="slot-words"]').value = slot.words.join("\n");
+
+    const removeButton = editor.querySelector('[data-action="remove-slot"]');
+    removeButton.disabled = state.slots.length <= MIN_SLOT_COUNT;
+    removeButton.setAttribute("aria-label", `Remove slot ${index + 1}`);
+
+    elements.slotEditors.append(editor);
+  });
+
+  updateSlotControls();
+}
+
+function addSlot() {
+  if (state.slots.length >= MAX_SLOT_COUNT) {
+    return;
+  }
+
+  const usedIds = new Set(state.slots.map((slot) => slugify(slot.id)).filter(Boolean));
+  const slot = createDefaultSlot(state.slots.length, usedIds);
+
+  state.slots.push(cloneSlot(slot));
+  state.isDirty = true;
+
+  renderSlotEditors();
+  refreshSummary();
+  setActionStatus(`Added {${slot.id}}. Update a sentence template to use it.`, "info");
+}
+
+function removeSlot(index) {
+  if (state.slots.length <= MIN_SLOT_COUNT) {
+    return;
+  }
+
+  const [removedSlot] = state.slots.splice(index, 1);
+  state.isDirty = true;
+
+  renderSlotEditors();
+  refreshSummary();
+  setActionStatus(`Removed {${removedSlot.id}}. Update any templates that still reference it.`, "info");
+}
+
+function syncSlotFromEditor(editor) {
+  const index = Number(editor.dataset.slotEditor);
+  const slot = state.slots[index];
+  if (!slot) {
+    return;
+  }
+
+  slot.label = editor.querySelector('[data-role="slot-label"]').value.trim();
+  slot.id = editor.querySelector('[data-role="slot-token"]').value.trim();
+  slot.hint = editor.querySelector('[data-role="slot-hint"]').value.trim();
+  slot.color = editor.querySelector('[data-role="slot-color"]').value;
+  slot.words = parseWordLines(editor.querySelector('[data-role="slot-words"]').value);
+
+  editor.querySelector("[data-slot-chip]").style.backgroundColor = slot.color;
+}
+
+function updateSlotControls() {
+  const count = state.slots.length;
+  elements.slotCountBadge.textContent = `${count} ${count === 1 ? "slot" : "slots"}`;
+  elements.addSlotButton.disabled = count >= MAX_SLOT_COUNT;
+  elements.addSlotButton.setAttribute("aria-disabled", count >= MAX_SLOT_COUNT ? "true" : "false");
 }
 
 function renderTokenList(slots) {
@@ -238,16 +314,8 @@ function renderSampleSentence(validation, dataset) {
   }
 
   const firstTemplate = dataset.templates[0];
-  const sampleWords = Object.fromEntries(
-    dataset.slots.map((slot) => [slot.id, slot.words[0]])
-  );
+  const sampleWords = Object.fromEntries(dataset.slots.map((slot) => [slot.id, slot.words[0]]));
   elements.sampleSentence.textContent = fillTemplateText(firstTemplate.text, sampleWords);
-}
-
-function syncSlotChips() {
-  slotEditors.forEach((editor) => {
-    editor.chip.style.backgroundColor = editor.colorInput.value;
-  });
 }
 
 function updateDirtyBadge() {
@@ -343,4 +411,14 @@ async function handleImport(event) {
 function setActionStatus(message, tone) {
   elements.actionStatus.textContent = message;
   elements.actionStatus.dataset.tone = tone;
+}
+
+function cloneSlot(slot) {
+  return {
+    id: slot.id,
+    label: slot.label,
+    hint: slot.hint,
+    color: slot.color,
+    words: [...slot.words]
+  };
 }
