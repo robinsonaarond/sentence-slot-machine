@@ -182,6 +182,10 @@ function renderSentence({ animate = true } = {}) {
     token.style.borderColor = slot?.color || "#999999";
     token.textContent = slot ? state.currentWords[slot.id] : `{${segment.value}}`;
 
+    if (slot) {
+      token.dataset.slotLabel = slot.label;
+    }
+
     if (animate) {
       token.style.animationDelay = `${index * 80}ms`;
       token.classList.add("is-updating");
